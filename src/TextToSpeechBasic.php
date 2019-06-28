@@ -49,7 +49,7 @@ class TextToSpeechBasic {
 	 * Array contains punctuation characters.
 	 * @var array
 	 */
-	private $Puntuation = array('.', ',', '?', '!', ':');
+	private $Punctuation = array('.', ',', '?', '!', ':');
 
 	/**
 	 * url with parameters
@@ -167,7 +167,7 @@ class TextToSpeechBasic {
 	 * @return array contains words
 	 */
 	private function fromFile($path, $newArray = array(), $data = array()) {
-		if (empty($this->Puntuation)) return false;
+		if (empty($this->Punctuation)) return false;
 		$str = file_get_contents($path);
 		$str = preg_replace('/\n|\r/', '', $str);
 		while (true) {
@@ -177,7 +177,7 @@ class TextToSpeechBasic {
 			}
 			$strs = substr($str, 0, self::Number);
 			$data = array();
-			foreach ($this->Puntuation as $key => $value) {
+			foreach ($this->Punctuation as $key => $value) {
 				$data[] = abs(strrpos($strs, $value));
 			}
 			$limit = max($data);
