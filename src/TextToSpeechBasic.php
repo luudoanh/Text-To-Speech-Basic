@@ -38,7 +38,7 @@ class TextToSpeechBasic {
 	 * @var string
 	 */
 	const url = 'https://translate.google.com.vn/translate_tts';
-
+	
 	/**
 	 * The directory save audio files when processing is complete
 	 * @var string
