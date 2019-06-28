@@ -12,7 +12,7 @@ class TextToSpeechBasic {
 	/**
 	 * @author 		Luu Doanh
 	 * @copyright 	Luu Doanh (C) 2019
-	 * @link 		https://github.com/luudoanh26/Text-To-Speech-Basic
+	 * @link 		https://github.com/luudoanh/Text-To-Speech-Basic
 	 */
 	
 	/**
@@ -38,7 +38,7 @@ class TextToSpeechBasic {
 	 * @var string
 	 */
 	const url = 'https://translate.google.com.vn/translate_tts';
-
+	
 	/**
 	 * The directory save audio files when processing is complete
 	 * @var string
@@ -46,10 +46,10 @@ class TextToSpeechBasic {
 	private static $save_folder = '';
 
 	/**
-	 * Array contains punctuation characters.
+	 * Array contains listArrayCharacters characters.
 	 * @var array
 	 */
-	private $Puntuation = array('.', ',', '?', '!', ':');
+	private $listArrayCharacters = array('.', ',', '?', '!', ':');
 
 	/**
 	 * url with parameters
@@ -167,7 +167,7 @@ class TextToSpeechBasic {
 	 * @return array contains words
 	 */
 	private function fromFile($path, $newArray = array(), $data = array()) {
-		if (empty($this->Puntuation)) return false;
+		if (empty($this->listArrayCharacters)) return false;
 		$str = file_get_contents($path);
 		$str = preg_replace('/\n|\r/', '', $str);
 		while (true) {
@@ -177,11 +177,11 @@ class TextToSpeechBasic {
 			}
 			$strs = substr($str, 0, self::Number);
 			$data = array();
-			foreach ($this->Puntuation as $key => $value) {
+			foreach ($this->listArrayCharacters as $key => $value) {
 				$data[] = abs(strrpos($strs, $value));
 			}
 			$limit = max($data);
-			if ($limit == 0) { //If there is no valid punctuation.
+			if ($limit == 0) { //If there is no valid listArrayCharacters.
 				$data[] = abs(strrpos($strs, ' ')); //then we use spaces to break sentences.
 				$limit = max($data);
 			}
