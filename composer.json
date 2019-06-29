@@ -21,8 +21,7 @@
         "test": "@phpunit"
     },
     "require-dev": {
-        "phpunit/phpunit": "6.5",
-        "luudoanh/text-to-speech": "1.0"
+        "phpunit/phpunit": "6.5"
     },
     "autoload": {
         "psr-4": {
