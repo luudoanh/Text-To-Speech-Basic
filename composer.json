@@ -15,7 +15,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "luudoanh/text-to-speech": "dev-master"
     },
     "scripts": {
         "test": "@phpunit"
