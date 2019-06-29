@@ -5,7 +5,7 @@
 ## Installation
 ### With Composer
 ```
-$ composer require cookie/text-to-speech
+$ composer require luudoanh/text-to-speech
 ```
 ```php
 <?php
