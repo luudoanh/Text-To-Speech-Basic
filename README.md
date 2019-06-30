@@ -10,15 +10,17 @@ $ composer require luudoanh/text-to-speech
 ```php
 <?php
 
-require 'TextToSpeechBasic.php';
+require_once __DIR__.'/vendor/autoload.php';
 
-use App\TextToSpeechBasic;
+use \App\TextToSpeechBasic;
 $tts = new TextToSpeechBasic();
-$tts->_config = array(
+$config = array(
 	'tl' => 'en', // Example: en => English, vi => Vietnamese
 	'ie' => 'UTF-8', // The language character set you want to convert.
 	'client' => 'tw-ob' // Constant
 );
+// Config settings
+$ttts->_setting($config);
 // $file_path path to text file.
 // $folder_save folder save audio file
 echo $tts->TTS($file_path, $folder_save);
@@ -27,7 +29,24 @@ echo $tts->TTS($file_path, $folder_save);
 
 ### Without Composer
 
-If you don't use composer. Download the Text To Speech latest release and put the contents of the ZIP archive into a directory in your project. Then do the code above.
+If you don't use composer. Download the Text To Speech latest release and put the contents of the ZIP archive into a directory in your project.
+```php
+<?php
+require_once __DIR__.'/src/TextToSpeechBasic.php';
+use \App\TextToSpeechBasic;
+$tts = new TextToSpeechBasic();
+$config = array(
+	'tl' => 'en', // Example: en => English, vi => Vietnamese
+	'ie' => 'UTF-8', // The language character set you want to convert.
+	'client' => 'tw-ob' // Constant
+);
+// Config settings
+$ttts->_setting($config);
+// $file_path path to text file.
+// $folder_save folder save audio file
+echo $tts->TTS($file_path, $folder_save);
+// return  Successful! is completed
+```
 ## Support Language
 
 I'm not sure, but it works well with English and Vietnamese
