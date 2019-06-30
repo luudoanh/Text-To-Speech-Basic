@@ -34,6 +34,7 @@ use PHPUnit\Util\TestDox\HtmlResultPrinter;
 use PHPUnit\Util\TestDox\TextResultPrinter;
 use PHPUnit\Util\TestDox\XmlResultPrinter;
 use ReflectionClass;
+use SebastianBergmann;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Exception as CodeCoverageException;
 use SebastianBergmann\CodeCoverage\Filter as CodeCoverageFilter;
@@ -43,7 +44,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Facade as HtmlReport;
 use SebastianBergmann\CodeCoverage\Report\PHP as PhpReport;
 use SebastianBergmann\CodeCoverage\Report\Text as TextReport;
 use SebastianBergmann\CodeCoverage\Report\Xml\Facade as XmlReport;
-use SebastianBergmann\Comparator\Comparator;
 use SebastianBergmann\Environment\Runtime;
 
 /**
@@ -190,6 +190,8 @@ class TestRunner extends BaseTestRunner
 
         $this->handleConfiguration($arguments);
 
+        $this->processSuiteFilters($suite, $arguments);
+
         if (isset($arguments['bootstrap'])) {
             $GLOBALS['__PHPUNIT_BOOTSTRAP'] = $arguments['bootstrap'];
         }
@@ -203,7 +205,7 @@ class TestRunner extends BaseTestRunner
         }
 
         if ($arguments['beStrictAboutChangesToGlobalState'] === true) {
-            $suite->setBeStrictAboutChangesToGlobalState(true);
+            $suite->setbeStrictAboutChangesToGlobalState(true);
         }
 
         if (\is_int($arguments['repeat']) && $arguments['repeat'] > 0) {
@@ -427,7 +429,7 @@ class TestRunner extends BaseTestRunner
             );
 
             $codeCoverage->setUnintentionallyCoveredSubclassesWhitelist(
-                [Comparator::class]
+                [SebastianBergmann\Comparator\Comparator::class]
             );
 
             $codeCoverage->setCheckForUnintentionallyCoveredCode(
@@ -538,7 +540,6 @@ class TestRunner extends BaseTestRunner
         $result->setTimeoutForLargeTests($arguments['timeoutForLargeTests']);
 
         if ($suite instanceof TestSuite) {
-            $this->processSuiteFilters($suite, $arguments);
             $suite->setRunTestInSeparateProcess($arguments['processIsolation']);
         }
 

@@ -201,7 +201,7 @@ class PhptTestCase implements Test, SelfDescribing
         $time      = PHP_Timer::stop();
 
         if ($result->getCollectCodeCoverageInformation() && ($coverage = $this->cleanupForCoverage())) {
-            $result->getCodeCoverage()->append($coverage, $this, true, [], [], true);
+            $result->getCodeCoverage()->append($coverage, $this);
         }
 
         try {

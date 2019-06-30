@@ -73,10 +73,9 @@ class TeamCity extends ResultPrinter
         $this->printEvent(
             'testFailed',
             [
-                'name'     => $test->getName(),
-                'message'  => self::getMessage($e),
-                'details'  => self::getDetails($e),
-                'duration' => self::toMilliseconds($time),
+                'name'    => $test->getName(),
+                'message' => self::getMessage($e),
+                'details' => self::getDetails($e),
             ]
         );
     }
@@ -93,10 +92,9 @@ class TeamCity extends ResultPrinter
         $this->printEvent(
             'testFailed',
             [
-                'name'     => $test->getName(),
-                'message'  => self::getMessage($e),
-                'details'  => self::getDetails($e),
-                'duration' => self::toMilliseconds($time),
+                'name'    => $test->getName(),
+                'message' => self::getMessage($e),
+                'details' => self::getDetails($e)
             ]
         );
     }
@@ -111,10 +109,9 @@ class TeamCity extends ResultPrinter
     public function addFailure(Test $test, AssertionFailedError $e, $time)
     {
         $parameters = [
-            'name'     => $test->getName(),
-            'message'  => self::getMessage($e),
-            'details'  => self::getDetails($e),
-            'duration' => self::toMilliseconds($time),
+            'name'    => $test->getName(),
+            'message' => self::getMessage($e),
+            'details' => self::getDetails($e),
         ];
 
         if ($e instanceof ExpectationFailedException) {
@@ -153,7 +150,7 @@ class TeamCity extends ResultPrinter
      */
     public function addIncompleteTest(Test $test, \Exception $e, $time)
     {
-        $this->printIgnoredTest($test->getName(), $e, $time);
+        $this->printIgnoredTest($test->getName(), $e);
     }
 
     /**
@@ -180,22 +177,21 @@ class TeamCity extends ResultPrinter
         $testName = $test->getName();
         if ($this->startedTestName != $testName) {
             $this->startTest($test);
-            $this->printIgnoredTest($testName, $e, $time);
+            $this->printIgnoredTest($testName, $e);
             $this->endTest($test, $time);
         } else {
-            $this->printIgnoredTest($testName, $e, $time);
+            $this->printIgnoredTest($testName, $e);
         }
     }
 
-    public function printIgnoredTest($testName, \Exception $e, $time)
+    public function printIgnoredTest($testName, \Exception $e)
     {
         $this->printEvent(
             'testIgnored',
             [
-                'name'     => $testName,
-                'message'  => self::getMessage($e),
-                'details'  => self::getDetails($e),
-                'duration' => self::toMilliseconds($time),
+                'name'    => $testName,
+                'message' => self::getMessage($e),
+                'details' => self::getDetails($e),
             ]
         );
     }
@@ -306,7 +302,7 @@ class TeamCity extends ResultPrinter
             'testFinished',
             [
                 'name'     => $test->getName(),
-                'duration' => self::toMilliseconds($time),
+                'duration' => (int) (\round($time, 2) * 1000)
             ]
         );
     }
@@ -423,15 +419,5 @@ class TeamCity extends ResultPrinter
         $reflectionClass = new ReflectionClass($className);
 
         return $reflectionClass->getFileName();
-    }
-
-    /**
-     * @param float $time microseconds
-     *
-     * @return int
-     */
-    private static function toMilliseconds($time)
-    {
-        return \round($time * 1000);
     }
 }

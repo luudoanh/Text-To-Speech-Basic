@@ -286,7 +286,7 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
                 }
             }
 
-            if (!$suiteMethod && !$testClass->isAbstract() && $testClass->isSubclassOf(TestCase::class)) {
+            if (!$suiteMethod && !$testClass->isAbstract()) {
                 $this->addTest(new self($testClass));
             }
         } else {
@@ -358,11 +358,11 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
         }
 
         foreach ($newClasses as $className) {
-            $class = new ReflectionClass($className);
-
-            if (\dirname($class->getFileName()) === __DIR__) {
+            if ($className === DataProviderTestSuite::class) {
                 continue;
             }
+
+            $class = new ReflectionClass($className);
 
             if (!$class->isAbstract()) {
                 if ($class->hasMethod(BaseTestRunner::SUITE_METHODNAME)) {
@@ -746,7 +746,7 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
             }
 
             if ($test instanceof TestCase || $test instanceof self) {
-                $test->setBeStrictAboutChangesToGlobalState($this->beStrictAboutChangesToGlobalState);
+                $test->setbeStrictAboutChangesToGlobalState($this->beStrictAboutChangesToGlobalState);
                 $test->setBackupGlobals($this->backupGlobals);
                 $test->setBackupStaticAttributes($this->backupStaticAttributes);
                 $test->setRunTestInSeparateProcess($this->runTestInSeparateProcess);
@@ -949,7 +949,7 @@ class TestSuite implements Test, SelfDescribing, IteratorAggregate
     /**
      * @param bool $beStrictAboutChangesToGlobalState
      */
-    public function setBeStrictAboutChangesToGlobalState($beStrictAboutChangesToGlobalState)
+    public function setbeStrictAboutChangesToGlobalState($beStrictAboutChangesToGlobalState)
     {
         if (null === $this->beStrictAboutChangesToGlobalState && \is_bool($beStrictAboutChangesToGlobalState)) {
             $this->beStrictAboutChangesToGlobalState = $beStrictAboutChangesToGlobalState;

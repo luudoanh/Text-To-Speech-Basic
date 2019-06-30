@@ -170,9 +170,6 @@ class Configuration
         $this->xpath    = new DOMXPath($this->document);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     final private function __clone()
     {
     }
@@ -564,11 +561,9 @@ class Configuration
             $value = $data['value'];
             $force = isset($data['force']) ? $data['force'] : false;
 
-            if ($force || false === \getenv($name)) {
+            if (false === \getenv($name)) {
                 \putenv("{$name}={$value}");
             }
-
-            $value = \getenv($name);
 
             if (!isset($_ENV[$name])) {
                 $_ENV[$name] = $value;
