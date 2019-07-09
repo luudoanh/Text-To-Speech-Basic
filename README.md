@@ -20,7 +20,7 @@ $config = array(
 	'client' => 'tw-ob' // Constant
 );
 // Config settings
-$ttts->_setting($config);
+$tts->_setting($config);
 // $file_path path to text file.
 // $folder_save folder save audio file
 echo $tts->TTS($file_path, $folder_save);
@@ -41,7 +41,7 @@ $config = array(
 	'client' => 'tw-ob' // Constant
 );
 // Config settings
-$ttts->_setting($config);
+$tts->_setting($config);
 // $file_path path to text file.
 // $folder_save folder save audio file
 echo $tts->TTS($file_path, $folder_save);
