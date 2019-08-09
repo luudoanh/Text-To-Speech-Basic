@@ -8,7 +8,8 @@ namespace App;
  * các bạn thể sử dụng lại class này cho các dự án khác của mình. Mình mong là nó sẽ hửu ích cho bạn.
  * 
  */
-class TextToSpeechBasic {
+class TextToSpeechBasic
+{
 	/**
 	 * @author 		Luu Doanh
 	 * @copyright 	Luu Doanh (C) 2019
@@ -19,13 +20,13 @@ class TextToSpeechBasic {
 	 * Declare a constant to divide the text
 	 * @var int
 	 */
-	const Number = 200;
+	const NUMBER = 200;
 	
 	/**
 	 * raw http header
 	 */
-	const Context = array(
-		'https' => array(
+	const Context = array (
+		'https' => array (
 			'method' => "GET",
 			'header' => "accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3\r\n" .
 			"accept-language: vi-VN,vi;q=0.9,fr-FR;q=0.8,fr;q=0.7,en-US;q=0.6,en;q=0.5\r\n".
@@ -37,7 +38,7 @@ class TextToSpeechBasic {
 	 * url google translate
 	 * @var string
 	 */
-	const url = 'https://translate.google.com.vn/translate_tts';
+	const URL = 'https://translate.google.com.vn/translate_tts';
 	
 	/**
 	 * The directory save audio files when processing is complete
@@ -74,14 +75,19 @@ class TextToSpeechBasic {
 	 */
 	private $fileList = [];
 
-	var $text = '';
+	/**
+	 * New text
+	 * @var string
+	 */
+	private $text = '';
 
 	/**
 	 * Set input parameters
 	 * @param  array  $config [description]
 	 * @return [type]         [description]
 	 */
-	public function _setting($config = array()) {
+	public function _setting($config = array())
+	{
 		foreach ($config as $key => $value) {
 			if (isset($key)) {
 				$this->_config[$key] = $value;
@@ -94,8 +100,9 @@ class TextToSpeechBasic {
 	 * Set url complete
 	 * @param Content text to speech
 	 */
-	private function set_uri($content) {
-		$this->raw_url = self::url.'?ie='.$this->_config['ie'].'&tl='.$this->_config['tl'].'&client='.$this->_config['client'].'&q='.urlencode($content);
+	private function set_uri($content)
+	{
+		$this->raw_url = self::URL.'?ie='.$this->_config['ie'].'&tl='.$this->_config['tl'].'&client='.$this->_config['client'].'&q='.urlencode($content);
 		return $this;
 
 	}
@@ -106,7 +113,8 @@ class TextToSpeechBasic {
 	 * @param  Type file (dedault .mp3)
 	 * @return Array contains file list
 	 */
-	private function fromData() {
+	private function fromData()
+	{
 		if (!is_dir(self::$save_folder)) {
 			return false;
 		}
@@ -129,7 +137,8 @@ class TextToSpeechBasic {
 	 * Merge audio files
 	 * @param string $name_full
 	 */
-	private function Merge_Audio($name_full = 'Full_') {
+	private function Merge_Audio($name_full = 'Full_')
+	{
 		if (empty($this->fromData())) {
 			return false;
 		}
@@ -151,7 +160,8 @@ class TextToSpeechBasic {
 	 * @param  integer $part
 	 * @return true
 	 */
-	private function save_file($path,$name='part_', $part=1) {
+	private function save_file($path,$name='part_', $part=1)
+	{
 		foreach ($this->fromFile($path) as $key => $value) {
 			$url = $this->set_uri($value)->raw_url;
 			$result = copy($url, self::$save_folder.'/'.$name.$part.'.mp3', stream_context_create(self::Context));
@@ -166,16 +176,17 @@ class TextToSpeechBasic {
 	 * @param  path file
 	 * @return array contains words
 	 */
-	private function fromFile($path, $newArray = array(), $data = array()) {
+	private function fromFile($path, $newArray = array(), $data = array())
+	{
 		if (empty($this->listArrayCharacters)) return false;
 		$str = file_get_contents($path);
 		$str = preg_replace('/\n|\r/', '', $str);
 		while (true) {
-			if (strlen($str) < self::Number) {
+			if (strlen($str) < self::NUMBER) {
 				array_push($newArray, $str);
 				break;
 			}
-			$strs = substr($str, 0, self::Number);
+			$strs = substr($str, 0, self::NUMBER);
 			$data = array();
 			foreach ($this->listArrayCharacters as $key => $value) {
 				$data[] = abs(strrpos($strs, $value));
@@ -197,7 +208,8 @@ class TextToSpeechBasic {
 	 * @param path file text
 	 * @param New folder to save the final file
 	 */
-	public function TTS($path, $save_folder) {
+	public function TTS($path, $save_folder)
+	{
 		if (!is_string($path)) {
 			return false;
 		}
@@ -222,7 +234,8 @@ class TextToSpeechBasic {
 	 * Fucntion reset
 	 * @return null
 	 */
-	private function reset() {
+	private function reset()
+	{
 		$this->text = null;
 		$this->fileList = [];
 	}
@@ -230,7 +243,8 @@ class TextToSpeechBasic {
 	/**
 	 * Reset script
 	 */
-	public function __construct() {
+	public function __construct()
+	{
 		$this->reset();
 	}
 }
